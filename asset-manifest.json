@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/celsius-fahrenheit/static/css/main.073c9b0a.css",
+    "main.js": "/celsius-fahrenheit/static/js/main.363d1ae9.js",
+    "static/js/787.1cb281e3.chunk.js": "/celsius-fahrenheit/static/js/787.1cb281e3.chunk.js",
+    "static/media/logo.svg": "/celsius-fahrenheit/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "index.html": "/celsius-fahrenheit/index.html",
+    "main.073c9b0a.css.map": "/celsius-fahrenheit/static/css/main.073c9b0a.css.map",
+    "main.363d1ae9.js.map": "/celsius-fahrenheit/static/js/main.363d1ae9.js.map",
+    "787.1cb281e3.chunk.js.map": "/celsius-fahrenheit/static/js/787.1cb281e3.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.073c9b0a.css",
+    "static/js/main.363d1ae9.js"
+  ]
+}
