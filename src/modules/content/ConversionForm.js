@@ -1,16 +1,15 @@
 import PropTypes from 'prop-types';
 import {
-  Button,
-  CardActions,
   FilledInput,
   FormControl,
   FormHelperText,
+  Grid,
   InputAdornment,
   InputLabel,
   OutlinedInput
 } from '@mui/material';
 import { Box } from '@mui/system';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { PRECISION } from '../../constants';
 
 /**
@@ -40,45 +39,72 @@ function ConversionForm(props) {
   }, [props.isCelsius, state, from, to]);
 
   // Memo if user spams duplicate values.
-  const convertTemperature = useCallback(() => {
-    // Ensure input is of valid number
-    if (!isNaN(+from)) {
-      // set to no error if we pass our validation
-      setError('');
-      const degree = +((+from).toFixed(PRECISION));
-      // 9 / 5 = 1.8
-      const result = props.isCelsius
-        ? (degree * 1.8) + 32 // C -> F
-        : (degree - 32) * (5 / 9); // F -> C
-      setTo(parseFloat(result.toFixed(PRECISION)));
-    } else {
-      setError('Input provided is not a number.');
+  useMemo(() => {
+    // Only convert temperature if previous conversion state was similar
+    if (state === props.isCelsius) {
+      // Ensure input is of valid number
+      if (from && !isNaN(+from)) {
+        // set to no error if we pass our validation
+        setError('');
+        const degree = +((+from).toFixed(PRECISION));
+        // 9 / 5 = 1.8
+        const result = props.isCelsius
+          ? (degree * 1.8) + 32 // C -> F
+          : (degree - 32) * (5 / 9); // F -> C
+        setTo(parseFloat(result.toFixed(PRECISION)));
+      } else if (from !== 0 && from !== '') {
+        setError('Input provided is not a number.');
+      }
     }
-  }, [from, props.isCelsius]);
+  }, [from, props.isCelsius, state]);
   return (
     <Box
     component="form"
     autoComplete="off"
     >
-      <FormControl fullWidth>
-          <InputLabel htmlFor="temperature-from">
-            {props.from}
-          </InputLabel>
-          <OutlinedInput
-          id="temperature-from"
-          value={from}
-          onChange={({target: {value}}) => setFrom(value)}
-          endAdornment={
-              <InputAdornment position="end">
-              &deg;{props[props.from]}
-              </InputAdornment>
-          }
-          label={props.from}
-          error={error !== ''}
-          />
-          <FormHelperText error={error !== ''}>{error}</FormHelperText>
-      </FormControl>
-      <CardActions sx={{ m: 2 }}>
+      <Grid container spacing={2} columns={12}>
+        <Grid item xs={6}>
+          <FormControl fullWidth>
+            <InputLabel htmlFor="temperature-from">
+              Enter {props.from} Here
+            </InputLabel>
+            <OutlinedInput
+            id="temperature-from"
+            value={from}
+            onChange={({target: {value}}) => setFrom(value)}
+            endAdornment={
+                <InputAdornment position="end">
+                  &deg;{props[props.from]}
+                </InputAdornment>
+            }
+            label={`Enter ${props.from} Here`}
+            error={error !== ''}
+            />
+            <FormHelperText error={error !== ''}>{error}</FormHelperText>
+          </FormControl>
+        </Grid>
+        <Grid item xs={6}>
+          <FormControl fullWidth variant="filled">
+            <InputLabel htmlFor="temperature-to" defaultValue={`Converted {props.to} Will Show Here`}>
+              {props.to}
+            </InputLabel>
+            <FilledInput
+            disabled
+            id="temperature-to"
+            value={to}
+            endAdornment={
+                <InputAdornment position="end">
+                  &deg;{props[props.to]}
+                </InputAdornment>
+            }
+            label={`Converted ${props.to} Will Show Here`}
+            // label={`Enter ${props.from} Here`}
+            />
+          </FormControl>
+        </Grid>
+      </Grid>
+      
+      {/* <CardActions sx={{ m: 2 }}>
           <Button variant="contained" onClick={convertTemperature}>
             Convert to &deg;{props[props.to]}
           </Button>
@@ -92,23 +118,8 @@ function ConversionForm(props) {
           >
           Reset
           </Button>
-      </CardActions>
-      <FormControl fullWidth variant="filled">
-          <InputLabel htmlFor="temperature-to">
-            {props.to}
-          </InputLabel>
-          <FilledInput
-          disabled
-          id="temperature-to"
-          value={to}
-          endAdornment={
-              <InputAdornment position="end">
-              &deg;{props[props.to]}
-              </InputAdornment>
-          }
-          label={props.to}
-          />
-      </FormControl>
+      </CardActions> */}
+      
     </Box>
   );
 }

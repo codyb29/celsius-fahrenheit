@@ -9,9 +9,9 @@ function SwapTitle(props) {
   return (
     <Grid container component="h2" rowSpacing={3}>
       <Grid item xs={12} sm={5} textAlign="center">
-        <Paper elevation={6}>
+        {/* <Paper elevation={6}> */}
           {props.from}
-        </Paper>
+        {/* </Paper> */}
       </Grid>
       <Grid item xs={12} sm={2} textAlign="center">
         <Button aria-label="ConversionSwapIcon"
@@ -22,9 +22,9 @@ function SwapTitle(props) {
         </Button>
       </Grid>
       <Grid item xs={12} sm={5} textAlign="center">
-        <Paper elevation={6}>
+        {/* <Paper elevation={6}> */}
           {props.to}
-        </Paper>
+        {/* </Paper> */}
       </Grid>
     </Grid>
   );

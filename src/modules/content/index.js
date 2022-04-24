@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, Typography } from '@mui/material';
+import { Card, CardContent, CardHeader } from '@mui/material';
 import { Box } from '@mui/system';
 import { useState } from 'react';
 import ConversionForm from './ConversionForm';
@@ -36,9 +36,6 @@ function Main() {
           }
         />
         <CardContent>
-          <Typography paragraph>
-            Simple tool to convert Celsius to Fahrenheit and vice versa.
-          </Typography>
           <ConversionForm {...temperature} />
         </CardContent>
       </Card>
